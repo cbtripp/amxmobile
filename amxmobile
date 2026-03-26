@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shiloh — Data Suite by RTB</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-0: #08090c;
+  --bg-1: #0e1017;
+  --bg-2: #14161f;
+  --bg-3: #1a1d28;
+  --bg-4: #222636;
+  --bg-hover: #1e2130;
+  --border: rgba(255,255,255,0.06);
+  --border-active: rgba(196,18,48,0.4);
+  --red: #C41230;
+  --red-soft: #e8183c;
+  --red-glow: rgba(196,18,48,0.15);
+  --red-bg: rgba(196,18,48,0.08);
+  --gold: #c9a84c;
+  --gold-soft: rgba(201,168,76,0.15);
+  --green: #34d399;
+  --green-bg: rgba(52,211,153,0.1);
+  --blue: #60a5fa;
+  --blue-bg: rgba(96,165,250,0.1);
+  --purple: #a78bfa;
+  --purple-bg: rgba(167,139,250,0.1);
+  --text-0: #f0eee8;
+  --text-1: rgba(240,238,232,0.75);
+  --text-2: rgba(240,238,232,0.45);
+  --text-3: rgba(240,238,232,0.25);
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg-0);
+  color: var(--text-0);
+  min-height: 100vh;
+  display: flex;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: var(--bg-1);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 50;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-brand-name {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-style: italic;
+  color: var(--text-0);
+  letter-spacing: 0.5px;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.sidebar-brand-sub {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.sidebar-section {
+  padding: 16px 12px 8px;
+}
+.sidebar-section-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-3);
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-1);
+  text-decoration: none;
+}
+.sidebar-item:hover { background: var(--bg-hover); color: var(--text-0); }
+.sidebar-item.active { background: var(--red-bg); color: var(--red-soft); border: 1px solid rgba(196,18,48,0.2); }
+
+.sidebar-item-icon {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+  font-family: var(--mono);
+}
+
+.sidebar-item-badge {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--bg-3);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* Company color coding */
+.co-amx .sidebar-item-icon { background: rgba(196,18,48,0.15); color: #ff6b7f; }
+.co-amxl .sidebar-item-icon { background: rgba(196,18,48,0.1); color: #ff8fa0; }
+.co-jitex .sidebar-item-icon { background: rgba(59,130,246,0.15); color: #93bbfd; }
+.co-boost .sidebar-item-icon { background: rgba(52,211,153,0.15); color: #6ee7b7; }
+.co-bp .sidebar-item-icon { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+.co-trs .sidebar-item-icon { background: rgba(201,168,76,0.15); color: var(--gold); }
+
+.sidebar-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 12px;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 1px;
+}
+
+/* ─── MAIN ─── */
+.main {
+  margin-left: 260px;
+  flex: 1;
+  min-height: 100vh;
+}
+
+/* ─── TOP BAR ─── */
+.topbar {
+  height: 56px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 16px;
+  background: rgba(14,16,23,0.8);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.topbar-breadcrumb {
+  font-size: 12px;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.topbar-breadcrumb span { color: var(--text-0); font-weight: 600; }
+
+.topbar-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.btn-sm {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid var(--border);
+  background: var(--bg-3);
+  color: var(--text-1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-sm:hover { background: var(--bg-4); color: var(--text-0); }
+.btn-primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+}
+.btn-primary:hover { background: var(--red-soft); }
+
+/* ─── CONTENT ─── */
+.content {
+  padding: 32px;
+  max-width: 1200px;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+.page-title {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-style: italic;
+  color: var(--text-0);
+  margin-bottom: 6px;
+}
+.page-subtitle {
+  font-size: 13px;
+  color: var(--text-2);
+  font-weight: 400;
+}
+
+/* ─── SUITE GRID ─── */
+.suite-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.suite-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.suite-card:hover {
+  border-color: var(--border-active);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.suite-card.active {
+  border-color: var(--red);
+  box-shadow: 0 0 20px var(--red-glow);
+}
+
+.suite-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.suite-card-icon {
+  width: 40px; height: 40px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.suite-card-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-0);
+  margin-bottom: 3px;
+}
+.suite-card-desc {
+  font-size: 11.5px;
+  color: var(--text-2);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.suite-card-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 10px;
+  color: var(--text-3);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.suite-card-meta span { display: flex; align-items: center; gap: 4px; }
+
+/* ─── DATA MODULES (Bill.com style) ─── */
+.modules-section {
+  margin-bottom: 40px;
+}
+.modules-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.modules-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-0);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.modules-title .count {
+  font-size: 11px;
+  color: var(--text-2);
+  background: var(--bg-3);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.module-search {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px 8px 32px;
+  font-size: 12px;
+  color: var(--text-0);
+  font-family: var(--sans);
+  width: 240px;
+  outline: none;
+  transition: border-color 0.15s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+.module-search:focus { border-color: rgba(196,18,48,0.4); }
+.module-search::placeholder { color: var(--text-3); }
+
+.module-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.module-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.15s;
+  cursor: default;
+}
+.module-card:hover {
+  border-color: rgba(255,255,255,0.1);
+  background: var(--bg-3);
+}
+
+.module-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.module-name {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-0);
+}
+.module-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--text-2);
+}
+.module-meta-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--text-3);
+}
+
+.module-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* ─── REPORT BUILDER (Custom File Integration style) ─── */
+.builder-panel {
+  display: none;
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.builder-panel.active { display: block; }
+
+.builder-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.builder-title {
+  font-weight: 700;
+  font-size: 16px;
+}
+.builder-close {
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-3);
+  color: var(--text-1);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  transition: all 0.15s;
+}
+.builder-close:hover { background: var(--bg-4); color: var(--text-0); }
+
+.builder-body {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.builder-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.builder-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+.builder-select, .builder-input {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--text-0);
+  font-family: var(--sans);
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.builder-select:focus, .builder-input:focus { border-color: rgba(196,18,48,0.4); }
+.builder-select option { background: var(--bg-2); }
+
+.builder-fields {
+  grid-column: 1 / -1;
+}
+.field-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.field-chip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid var(--border);
+  background: var(--bg-3);
+  color: var(--text-1);
+  user-select: none;
+}
+.field-chip.selected {
+  background: var(--red-bg);
+  border-color: rgba(196,18,48,0.3);
+  color: var(--red-soft);
+}
+.field-chip:hover { border-color: rgba(255,255,255,0.15); }
+
+.builder-toggle-group {
+  display: flex;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.builder-toggle {
+  flex: 1;
+  padding: 9px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--sans);
+  color: var(--text-2);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+.builder-toggle.active {
+  background: var(--red);
+  color: white;
+}
+.builder-toggle:hover:not(.active) { color: var(--text-0); background: var(--bg-hover); }
+
+.builder-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ─── TABS ─── */
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.tab {
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  letter-spacing: 0.3px;
+}
+.tab:hover { color: var(--text-0); }
+.tab.active { color: var(--red-soft); border-bottom-color: var(--red); }
+
+/* ─── STATUS INDICATORS ─── */
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.status-live { background: var(--green); box-shadow: 0 0 6px rgba(52,211,153,0.4); }
+.status-pending { background: var(--gold); }
+.status-offline { background: var(--text-3); }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.suite-card { animation: fadeUp 0.4s ease both; }
+.suite-card:nth-child(1) { animation-delay: 0.05s; }
+.suite-card:nth-child(2) { animation-delay: 0.1s; }
+.suite-card:nth-child(3) { animation-delay: 0.15s; }
+.suite-card:nth-child(4) { animation-delay: 0.2s; }
+.suite-card:nth-child(5) { animation-delay: 0.25s; }
+.suite-card:nth-child(6) { animation-delay: 0.3s; }
+
+.module-card { animation: fadeUp 0.35s ease both; }
+.module-card:nth-child(1) { animation-delay: 0.05s; }
+.module-card:nth-child(2) { animation-delay: 0.08s; }
+.module-card:nth-child(3) { animation-delay: 0.11s; }
+.module-card:nth-child(4) { animation-delay: 0.14s; }
+.module-card:nth-child(5) { animation-delay: 0.17s; }
+.module-card:nth-child(6) { animation-delay: 0.20s; }
+.module-card:nth-child(7) { animation-delay: 0.23s; }
+.module-card:nth-child(8) { animation-delay: 0.26s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .sidebar { width: 220px; }
+  .main { margin-left: 220px; }
+  .builder-body { grid-template-columns: 1fr; }
+  .suite-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+}
+@media (max-width: 700px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── SIDEBAR ─── -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-name">Shiloh</div>
+    <div class="sidebar-brand-sub">Data Suite &mdash; RTB</div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Navigation</div>
+    <a class="sidebar-item active" onclick="showView('home')">
+      <span style="font-size:15px;">&#9632;</span> Dashboard
+    </a>
+    <a class="sidebar-item" onclick="showView('reports')">
+      <span style="font-size:14px;">&#9998;</span> Report Builder
+    </a>
+    <a class="sidebar-item">
+      <span style="font-size:14px;">&#8635;</span> Scheduled Exports
+    </a>
+    <a class="sidebar-item">
+      <span style="font-size:14px;">&#9881;</span> Templates
+    </a>
+    <a class="sidebar-item">
+      <span style="font-size:14px;">&#128202;</span> History
+    </a>
+  </div>
+
+  <div class="sidebar-divider"></div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Portfolio Companies</div>
+    <a class="sidebar-item co-amx" onclick="selectCompany('amx')">
+      <span class="sidebar-item-icon">AMX</span> AMX Logistics
+      <span class="sidebar-item-badge"><span class="status-dot status-live"></span></span>
+    </a>
+    <a class="sidebar-item co-amxl" onclick="selectCompany('amxl')">
+      <span class="sidebar-item-icon">AXL</span> AMXL
+      <span class="sidebar-item-badge"><span class="status-dot status-live"></span></span>
+    </a>
+    <a class="sidebar-item co-jitex" onclick="selectCompany('jitex')">
+      <span class="sidebar-item-icon">JIT</span> JIT-EX
+      <span class="sidebar-item-badge"><span class="status-dot status-pending"></span></span>
+    </a>
+    <a class="sidebar-item co-boost" onclick="selectCompany('boost')">
+      <span class="sidebar-item-icon">BST</span> Boost Transport
+      <span class="sidebar-item-badge"><span class="status-dot status-pending"></span></span>
+    </a>
+    <a class="sidebar-item co-bp" onclick="selectCompany('bp')">
+      <span class="sidebar-item-icon">BP</span> Blue Penguin
+      <span class="sidebar-item-badge"><span class="status-dot status-live"></span></span>
+    </a>
+    <a class="sidebar-item co-trs" onclick="selectCompany('trs')">
+      <span class="sidebar-item-icon">TRS</span> TAG Reserve Spirits
+      <span class="sidebar-item-badge"><span class="status-dot status-live"></span></span>
+    </a>
+  </div>
+
+  <div class="sidebar-footer">
+    SHILOH v1.0 &middot; PostgreSQL 18 &middot; PostGIS
+  </div>
+</aside>
+
+<!-- ─── MAIN CONTENT ─── -->
+<div class="main">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-breadcrumb">
+      Shiloh &rsaquo; <span id="breadcrumb-current">Dashboard</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-sm">&#9881; Settings</button>
+      <button class="btn-sm btn-primary" onclick="openBuilder()">+ New Report</button>
+    </div>
+  </div>
+
+  <!-- ═══ HOME VIEW ═══ -->
+  <div class="content" id="view-home">
+    <div class="page-header">
+      <div class="page-title">Portfolio Suite</div>
+      <div class="page-subtitle">Select a company to access its data modules, reports, and export tools.</div>
+    </div>
+
+    <div class="suite-grid">
+      <!-- AMX -->
+      <div class="suite-card" onclick="selectCompany('amx')">
+        <div class="suite-card-accent" style="background:linear-gradient(90deg,#C41230,#e8183c);"></div>
+        <div class="suite-card-icon" style="background:rgba(196,18,48,0.15);color:#ff6b7f;">AMX</div>
+        <div class="suite-card-name">AMX Logistics</div>
+        <div class="suite-card-desc">Asset-based trucking. Orders, carriers, settlements, dispatch.</div>
+        <div class="suite-card-meta">
+          <span><span class="status-dot status-live"></span> Live</span>
+          <span>16,042 loads</span>
+        </div>
+      </div>
+      <!-- AMXL -->
+      <div class="suite-card" onclick="selectCompany('amxl')">
+        <div class="suite-card-accent" style="background:linear-gradient(90deg,#9c0e27,#C41230);"></div>
+        <div class="suite-card-icon" style="background:rgba(196,18,48,0.1);color:#ff8fa0;">AXL</div>
+        <div class="suite-card-name">AMXL</div>
+        <div class="suite-card-desc">Logistics arm. Brokerage operations and managed freight.</div>
+        <div class="suite-card-meta">
+          <span><span class="status-dot status-live"></span> Live</span>
+          <span>8,214 loads</span>
+        </div>
+      </div>
+      <!-- JIT-EX -->
+      <div class="suite-card" onclick="selectCompany('jitex')">
+        <div class="suite-card-accent" style="background:linear-gradient(90deg,#2563eb,#60a5fa);"></div>
+        <div class="suite-card-icon" style="background:rgba(59,130,246,0.15);color:#93bbfd;">JIT</div>
+        <div class="suite-card-name">JIT-EX</div>
+        <div class="suite-card-desc">Just In Time Express. Regional carrier — Memphis &amp; Nashville.</div>
+        <div class="suite-card-meta">
+          <span><span class="status-dot status-pending"></span> Onboarding</span>
+          <span>265 tractors</span>
+        </div>
+      </div>
+      <!-- BOOST -->
+      <div class="suite-card" onclick="selectCompany('boost')">
+        <div class="suite-card-accent" style="background:linear-gradient(90deg,#059669,#34d399);"></div>
+        <div class="suite-card-icon" style="background:rgba(52,211,153,0.15);color:#6ee7b7;">BST</div>
+        <div class="suite-card-name">Boost Transport</div>
+        <div class="suite-card-desc">Managed logistics &amp; warehousing. 90,000+ sq ft warehouse network.</div>
+        <div class="suite-card-meta">
+          <span><span class="status-dot status-pending"></span> Onboarding</span>
+          <span>90+ sites</span>
+        </div>
+      </div>
+      <!-- BLUE PENGUIN -->
+      <div class="suite-card" onclick="selectCompany('bp')">
+        <div class="suite-card-accent" style="background:linear-gradient(90deg,#4f46e5,#818cf8);"></div>
+        <div class="suite-card-icon" style="background:rgba(99,102,241,0.15);color:#a5b4fc;">BP</div>
+        <div class="suite-card-name">Blue Penguin</div>
+        <div class="suite-card-desc">Payment processing platform. Merchants, transactions, residuals.</div>
+        <div class="suite-card-meta">
+          <span><span class="status-dot status-live"></span> Live</span>
+          <span>$40M+ rev</span>
+        </div>
+      </div>
+      <!-- TRS -->
+      <div class="suite-card" onclick="selectCompany('trs')">
+        <div class="suite-card-accent" style="background:linear-gradient(90deg,#b8973f,#c9a84c);"></div>
+        <div class="suite-card-icon" style="background:rgba(201,168,76,0.15);color:#c9a84c;">TRS</div>
+        <div class="suite-card-name">TAG Reserve Spirits</div>
+        <div class="suite-card-desc">Bradshaw Bourbon, Campesino Rum, BlueStar Tequila, Gameday Vodka, Tribini.</div>
+        <div class="suite-card-meta">
+          <span><span class="status-dot status-live"></span> Live</span>
+          <span>5 brands</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ COMPANY VIEW ═══ -->
+  <div class="content" id="view-company" style="display:none;">
+    <div class="page-header">
+      <div class="page-title" id="company-title">AMX Logistics</div>
+      <div class="page-subtitle" id="company-subtitle">Data modules &amp; export tools for AMX Logistics.</div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab(this,'modules')">Import &amp; Export</div>
+      <div class="tab" onclick="switchTab(this,'history')">History</div>
+      <div class="tab" onclick="switchTab(this,'templates')">Templates</div>
+      <div class="tab" onclick="switchTab(this,'schedules')">Schedules</div>
+      <div class="tab" onclick="switchTab(this,'preferences')">Preferences</div>
+    </div>
+
+    <!-- Search + modules -->
+    <div class="modules-section" id="tab-modules">
+      <div class="modules-header">
+        <div class="modules-title">Data Modules <span class="count" id="module-count">8</span></div>
+        <input class="module-search" placeholder="Search modules..." oninput="filterModules(this.value)">
+      </div>
+      <div class="module-list" id="module-list">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- Builder Panel -->
+    <div class="builder-panel" id="builder-panel">
+      <div class="builder-header">
+        <div class="builder-title" id="builder-title">Export Orders</div>
+        <button class="builder-close" onclick="closeBuilder()">&times;</button>
+      </div>
+      <div class="builder-body">
+        <div class="builder-section">
+          <div class="builder-label">Template</div>
+          <select class="builder-select" id="builder-template">
+            <option>Default Export</option>
+            <option>Factor View Reconciliation (CBT)</option>
+            <option>Carrier Settlement Report</option>
+            <option>Monthly P&L Summary</option>
+            <option>Custom...</option>
+          </select>
+        </div>
+        <div class="builder-section">
+          <div class="builder-label">Date Range</div>
+          <select class="builder-select">
+            <option>Last 7 days</option>
+            <option>Last 30 days</option>
+            <option>This month</option>
+            <option>Last quarter</option>
+            <option>Year to date</option>
+            <option>All time</option>
+            <option>Custom range...</option>
+          </select>
+        </div>
+        <div class="builder-section">
+          <div class="builder-label">File Type</div>
+          <div class="builder-toggle-group">
+            <button class="builder-toggle active">CSV</button>
+            <button class="builder-toggle">Excel</button>
+            <button class="builder-toggle">JSON</button>
+            <button class="builder-toggle">PDF</button>
+          </div>
+        </div>
+        <div class="builder-section">
+          <div class="builder-label">Delivery Method</div>
+          <div class="builder-toggle-group">
+            <button class="builder-toggle active">Download</button>
+            <button class="builder-toggle">Email</button>
+            <button class="builder-toggle">SFTP</button>
+            <button class="builder-toggle">Zapier</button>
+          </div>
+        </div>
+        <div class="builder-fields">
+          <div class="builder-label">Included Fields <span style="color:var(--text-3);font-weight:400;text-transform:none;letter-spacing:0;">(click to toggle)</span></div>
+          <div class="field-chips" id="field-chips">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+      <div class="builder-footer">
+        <button class="btn-sm">Cancel</button>
+        <button class="btn-sm" onclick="alert('Schedule saved.')">&#128339; Schedule Export</button>
+        <button class="btn-sm btn-primary" onclick="runExport()">Export Now &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div id="toast" style="position:fixed;bottom:24px;right:24px;background:var(--bg-3);border:1px solid var(--green);color:var(--green);padding:12px 20px;border-radius:8px;font-size:13px;font-weight:600;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none;z-index:100;">
+  &#10003; Export queued successfully.
+</div>
+
+<script>
+// ─── DATA ───
+const companies = {
+  amx: {
+    name: "AMX Logistics",
+    desc: "Data modules & export tools for AMX Logistics.",
+    modules: [
+      { name: "Orders", fields: ["Load #","Customer","Origin City","Origin State","Dest City","Dest State","Pickup Date","Delivery Date","Carrier","Rate","Status","Equipment Type","Miles","Weight","Commodity"], template: "BILL", lastExport: "Mar 25, 2026", hasImport: true },
+      { name: "Carriers", fields: ["Carrier ID","Carrier Name","MC #","DOT #","Contact","Phone","Email","Insurance Exp","Status","Rating","Pay Terms"], template: "BILL", lastExport: "Mar 22, 2026", hasImport: true },
+      { name: "Settlements", fields: ["Settlement ID","Carrier","Load #","Amount","Deductions","Net Pay","Payment Date","Method","Status"], template: "BILL", hasImport: false },
+      { name: "Invoices", fields: ["Invoice #","Customer Name","Amount","Payment Status","Line Item Amount","Line Item Location","Due Date","Issued Date"], template: "BILL", lastExport: "Mar 25, 2026", hasImport: true },
+      { name: "Payments", fields: ["Payment ID","Vendor","Amount","Date","Method","Reference","Status","Account"], template: "BILL", hasImport: false },
+      { name: "Customers", fields: ["Customer ID","Company Name","Contact","Phone","Email","Address","City","State","Zip","Credit Limit","Terms","Status"], template: "BILL", hasImport: true },
+      { name: "Fuel & Expenses", fields: ["Transaction Date","Driver","Truck #","Location","Gallons","Price/Gal","Total","Category","Vendor"], template: "BILL", hasImport: true },
+      { name: "Lane Analytics", fields: ["Origin","Destination","Avg Rate","Load Count","Avg Miles","Top Carrier","Margin %","Trend"], template: "BILL", hasImport: false },
+    ]
+  },
+  amxl: {
+    name: "AMXL",
+    desc: "Data modules & export tools for AMXL brokerage operations.",
+    modules: [
+      { name: "Brokered Loads", fields: ["Load #","Shipper","Carrier","Origin","Destination","Rate","Margin","Status","Booked Date"], template: "BILL", hasImport: true },
+      { name: "Carrier Payments", fields: ["Payment ID","Carrier","Amount","Date","Method","Status"], template: "BILL", hasImport: false },
+      { name: "Customer Invoices", fields: ["Invoice #","Customer","Amount","Status","Due Date"], template: "BILL", lastExport: "Mar 24, 2026", hasImport: true },
+      { name: "Margin Report", fields: ["Period","Revenue","Carrier Cost","Gross Margin","Margin %","Load Count"], template: "BILL", hasImport: false },
+    ]
+  },
+  jitex: {
+    name: "JIT-EX",
+    desc: "Data modules for Just In Time Express — Memphis & Nashville.",
+    modules: [
+      { name: "Fleet", fields: ["Tractor #","Type","Year","Make","Model","Status","Assigned Driver","Mileage","Last Service"], template: "BILL", hasImport: true },
+      { name: "Drivers", fields: ["Driver ID","Name","CDL #","CDL Exp","Hire Date","Status","Home Terminal","Assigned Tractor"], template: "BILL", hasImport: true },
+      { name: "Loads", fields: ["Load #","Customer","Origin","Destination","Driver","Tractor","Rate","Status","Pickup Date"], template: "BILL", hasImport: true },
+      { name: "Maintenance", fields: ["Work Order #","Tractor #","Date","Type","Description","Cost","Vendor","Status"], template: "BILL", hasImport: true },
+    ]
+  },
+  boost: {
+    name: "Boost Transport",
+    desc: "Data modules for Boost Transport managed logistics & warehousing.",
+    modules: [
+      { name: "Warehouse Inventory", fields: ["SKU","Product Name","Quantity","Location","Zone","Last Updated","Client"], template: "BILL", hasImport: true },
+      { name: "Shipments", fields: ["Shipment ID","Client","Origin Warehouse","Destination","Carrier","Status","Ship Date","Tracking #"], template: "BILL", hasImport: true },
+      { name: "Fulfillment Orders", fields: ["Order ID","Client","Platform","Items","Status","Ship Date","Tracking"], template: "BILL", hasImport: true },
+      { name: "Clients", fields: ["Client ID","Company","Contact","Phone","Email","Warehouse Location","Contract Start"], template: "BILL", hasImport: true },
+    ]
+  },
+  bp: {
+    name: "Blue Penguin",
+    desc: "Data modules for Blue Penguin payment processing.",
+    modules: [
+      { name: "Merchants", fields: ["Merchant ID","Business Name","Contact","Status","MCC","Processing Volume","Residual %"], template: "BILL", hasImport: true },
+      { name: "Transactions", fields: ["Transaction ID","Merchant","Amount","Date","Card Type","Status","Fee"], template: "BILL", hasImport: false },
+      { name: "Residuals", fields: ["Period","Agent","Merchant","Volume","Revenue","Residual Amount","Status"], template: "BILL", hasImport: false },
+      { name: "Chargebacks", fields: ["Case ID","Merchant","Amount","Date","Reason Code","Status","Resolution"], template: "BILL", hasImport: false },
+    ]
+  },
+  trs: {
+    name: "TAG Reserve Spirits",
+    desc: "Data modules for all TRS brands: Bradshaw Bourbon, Campesino Rum, BlueStar Tequila, Gameday Vodka, Tribini.",
+    modules: [
+      { name: "Distributors", fields: ["Distributor ID","Company","State","Territory","Contact","Phone","Status","Brands Carried"], template: "BILL", hasImport: true },
+      { name: "Sales Orders", fields: ["Order #","Distributor","Brand","SKU","Cases","Price/Case","Total","Ship Date","Status"], template: "BILL", hasImport: true },
+      { name: "Inventory", fields: ["SKU","Brand","Product","Cases on Hand","Warehouse","Last Updated","Reorder Point"], template: "BILL", hasImport: true },
+      { name: "Accounts Receivable", fields: ["Invoice #","Distributor","Amount","Due Date","Status","Days Outstanding"], template: "BILL", hasImport: false },
+      { name: "Brand Performance", fields: ["Brand","Period","Cases Sold","Revenue","COGS","Gross Margin","Markets Active"], template: "BILL", hasImport: false },
+      { name: "Compliance & Permits", fields: ["State","Permit Type","Expiration","Status","Brand","Notes"], template: "BILL", hasImport: true },
+    ]
+  },
+};
+
+let currentCompany = null;
+let currentModule = null;
+
+// ─── VIEW SWITCHING ───
+function showView(view) {
+  document.getElementById('view-home').style.display = view === 'home' ? 'block' : 'none';
+  document.getElementById('view-company').style.display = view === 'company' ? 'block' : 'none';
+  document.getElementById('breadcrumb-current').textContent = view === 'home' ? 'Dashboard' : companies[currentCompany]?.name || '';
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+}
+
+function selectCompany(key) {
+  currentCompany = key;
+  const co = companies[key];
+  document.getElementById('company-title').textContent = co.name;
+  document.getElementById('company-subtitle').textContent = co.desc;
+  document.getElementById('module-count').textContent = co.modules.length;
+  renderModules(co.modules);
+  showView('company');
+  closeBuilder();
+  // highlight sidebar
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+}
+
+function renderModules(modules) {
+  const list = document.getElementById('module-list');
+  list.innerHTML = modules.map((m, i) => `
+    <div class="module-card" data-name="${m.name.toLowerCase()}" style="animation-delay:${i * 0.03}s">
+      <div class="module-info">
+        <div class="module-name">${m.name}</div>
+        <div class="module-meta">
+          <span>Template: ${m.template}</span>
+          ${m.lastExport ? `<span class="module-meta-dot"></span><span>Last exported ${m.lastExport}</span>` : ''}
+        </div>
+      </div>
+      <div class="module-actions">
+        ${m.hasImport ? `<button class="btn-sm" onclick="alert('Import wizard coming soon.')">Import</button>` : ''}
+        <button class="btn-sm btn-primary" onclick="openModuleBuilder(${i})">Export</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterModules(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.module-card').forEach(card => {
+    card.style.display = card.dataset.name.includes(q) ? 'flex' : 'none';
+  });
+}
+
+// ─── BUILDER ───
+function openModuleBuilder(index) {
+  const co = companies[currentCompany];
+  const mod = co.modules[index];
+  currentModule = mod;
+  document.getElementById('builder-title').textContent = `Export ${mod.name}`;
+  renderFieldChips(mod.fields);
+  document.getElementById('builder-panel').classList.add('active');
+  document.getElementById('builder-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function openBuilder() {
+  if (!currentCompany) {
+    // default to AMX
+    selectCompany('amx');
+  }
+  const co = companies[currentCompany];
+  currentModule = co.modules[0];
+  document.getElementById('builder-title').textContent = `Export ${currentModule.name}`;
+  renderFieldChips(currentModule.fields);
+  document.getElementById('builder-panel').classList.add('active');
+}
+
+function closeBuilder() {
+  document.getElementById('builder-panel').classList.remove('active');
+}
+
+function renderFieldChips(fields) {
+  const container = document.getElementById('field-chips');
+  container.innerHTML = fields.map(f =>
+    `<span class="field-chip selected" onclick="this.classList.toggle('selected')">${f}</span>`
+  ).join('');
+}
+
+// Toggle buttons
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('builder-toggle') && !e.target.classList.contains('active')) {
+    const group = e.target.parentElement;
+    group.querySelectorAll('.builder-toggle').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+  }
+});
+
+function switchTab(el, tab) {
+  el.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  // For now just keep modules visible
+}
+
+function runExport() {
+  const toast = document.getElementById('toast');
+  const selected = document.querySelectorAll('.field-chip.selected').length;
+  toast.textContent = `✓ Export queued — ${selected} fields from ${currentModule?.name || 'module'}. Generating file...`;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateY(0)';
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(10px)';
+  }, 3500);
+}
+</script>
+</body>
+</html>
